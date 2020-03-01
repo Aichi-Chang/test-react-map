@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { render } from 'react-dom'
 import MapGL, { Source, Layer } from 'react-map-gl'
 
@@ -12,29 +12,32 @@ const Token = 'pk.eyJ1IjoicGhvZWJleHh4YyIsImEiOiJjazMxenUxYmUwZGdhM2xzMmVwZG5iNn
 
 export default function Map() {
 
+
   const [data, setData] = useState()
   const [viewport, setViewport] = useState({
     latitude: -28.016666,
     longitude: 153.399994,
-    zoom: 14,
+    zoom: 12,
     bearing: 0,
     pitch: 0
   })
+
 
   useEffect(() => {
     fetch('../data.json')
       .then(res => res.json())
       .then(res => setData(res))
-      // .then(res => setEvent({ event: res }))    
   },[])
 
-
+// here is the problem
+  const features = React.forwardRef(ref => {
+    const mapFeature = useRef(null)
+    queryRenderedFeature(mapFeature), {layers:['map']}
+  })
 
   if (!data) {
     return null
   }
-  
-  // console.log(data)
 
   return (
     <div style={{ height: '100%', position: 'relative' }}>
@@ -53,7 +56,6 @@ export default function Map() {
       </MapGL>
 
       <Control
-
         // containerComponent={this.props.containerComponent}
         data={data}
         // onChange={this._updateSettings}
