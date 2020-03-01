@@ -4,6 +4,7 @@ import MapGL, { Source, Layer } from 'react-map-gl'
 
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { dataLayer } from './Map-style'
+import Control from './Control'
 
 const Token = 'pk.eyJ1IjoicGhvZWJleHh4YyIsImEiOiJjazMxenUxYmUwZGdhM2xzMmVwZG5iNnQ0In0.NS8058Cpk5wl3Qko8cJQiQ'
 
@@ -33,26 +34,32 @@ export default function Map() {
     return null
   }
   
-  console.log(data)
+  // console.log(data)
 
   return (
-    <MapGL
-      {...viewport}
-      width="100%"
-      height="100%"
-      mapStyle="mapbox://styles/mapbox/dark-v9"
-      onViewportChange={setViewport}
-      mapboxApiAccessToken={Token}
-    >
-      <Source type="geojson" data={data}>
-        <Layer {...dataLayer} />
-      </Source>
-      {/* <div>
-      {data.map((dt, i) => {
-        return <div key={i}>{dt.id}</div>
-      })}
-    </div> */}
-    </MapGL>
+    <div style={{ height: '100%', position: 'relative' }}>
+      <MapGL
+        {...viewport}
+        width="100%"
+        height="100%"
+        mapStyle="mapbox://styles/mapbox/dark-v9"
+        onViewportChange={setViewport}
+        mapboxApiAccessToken={Token}
+      >
+        <Source type="geojson" data={data}>
+          <Layer {...dataLayer} />
+        </Source>
+      
+      </MapGL>
+
+      <Control
+
+        // containerComponent={this.props.containerComponent}
+        data={data}
+        // onChange={this._updateSettings}
+      />
+    </div>
+    
     
   )
 }

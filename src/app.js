@@ -10,7 +10,7 @@ import Map from './components/Map'
 
 const App = () => (
 
-  <div style={{ height: '100%' }}>
+  <div style={{ height: '100vh' }}>
     <Map />
   </div>
 
