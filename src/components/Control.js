@@ -1,8 +1,6 @@
 import React from 'react'
 
-import {
-  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-} from 'recharts'
+import ProgressBar from './ProgressBar'
 
 
 export default function Control({ data }) {
@@ -48,35 +46,40 @@ export default function Control({ data }) {
       <div className='control-panel'>
         <div>Construction Material: </div>
         <section className=''>
-          <div className='flex flex-row'>
+          <div className='flex flex-row items-center'>
             <button className='mr2 mb2'>
             Gravel 
             </button>
-            <p>{gravelNum}</p>
+            <ProgressBar percentage={gravelNum} />
+            < p className='ml2'>{gravelNum}</p>
           </div>
-          <div className='flex flex-row'>
+          <div className='flex flex-row items-center'>
             <button className='mr2 mb2'>
             Concrete
             </button>
-            <p>{concreteNum}</p>
+            <ProgressBar percentage={concreteNum} />
+            < p className='ml2'>{concreteNum}</p>
           </div>
-          <div className='flex flex-row'>
+          <div className='flex flex-row items-center'>
             <button className='mr2 mb2'>
             Bitumen
             </button>
-            <p>{bitumenNum}</p>
+            <ProgressBar percentage={bitumenNum} />
+            < p className='ml2'>{bitumenNum}</p>
           </div>
-          <div className='flex flex-row'>
+          <div className='flex flex-row items-center'>
             <button className='mr2 mb2'>
             Interlock Conc Block
             </button>
-            <p>{interlockNum}</p>
+            <ProgressBar percentage={interlockNum} />
+            < p className='ml2'>{interlockNum}</p>
           </div>
           <div className='flex flex-row'>
             <button className='mr2'>
             Other
             </button>
-            <p>{otherNum}</p>
+            <ProgressBar percentage={otherNum} />
+            < p className='ml2'>{otherNum}</p>
           </div>
         </section>
       </div>
@@ -84,23 +87,26 @@ export default function Control({ data }) {
       <div className='control-panel2'>
         <div>Size Category: </div>
         <section>
-          <div className='flex flex-row'>
+          <div className='flex flex-row items-center'>
             <button className='mr2 mb2'>
             0 - 50
             </button>
-            <p>{zeroFifty}</p>
+            <ProgressBar percentage={zeroFifty} />
+            < p className='ml2'>{zeroFifty}</p>
           </div>
-          <div className='flex flex-row'>
+          <div className='flex flex-row items-center'>
             <button className='mr2 mb2'>
             50 - 200
             </button>
-            <p>{fiftyTwoOO}</p>
+            <ProgressBar percentage={fiftyTwoOO} />
+            <p className='ml2'>{fiftyTwoOO}</p>
           </div>
-          <div className='flex flex-row'>
+          <div className='flex flex-row items-center'>
             <button className='mr2'>
             200 - 526
             </button>
-            <p>{twoOOFiveTwoSix}</p>
+            <ProgressBar percentage={twoOOFiveTwoSix} />
+            <p className='ml2'>{twoOOFiveTwoSix}</p>
           </div>
         </section>
       </div>
