@@ -22,41 +22,47 @@ export default function Map() {
     pitch: 0
   })
   const mapRef = useRef()
+  
 
   useEffect(() => {
     fetch('../data.json')
       .then(res => res.json())
       .then(res => setData(res))
   },[])
-  
 
-  console.log(mapRef)
-
-
+  // console.log(mapRef)
 
   function features () { 
     mapRef.current.queryRenderedFeatures( { layers: ['ramps'] })
-    if (features) {
-      setData(features)
-      console.log(data)
-    }
   }
 
-  function handleLoad () {
-    mapRef.current.getMap().addLayer({
-      id: 'ramps',
-      source: data,
-      paint: {
-        'fill-color': 'red',
-        'fill-opacity': 0.8
-      }
+  // function handleLoad () {
+  //   mapRef.current.getMap().addLayer({
+  //     id: 'ramps',
+  //     source: data,
+  //     paint: {
+  //       'fill-color': 'red',
+  //       'fill-opacity': 0.8
+  //     }
+  //   })
+  // }
+
+  function filterRamps (e) {
+    data.features.filter(feature => {
+      return feature.properties.material === e.target.value
     })
+  }
+
+
+  const handleClick = () => {
+    setData(filterRamps())
   }
 
 
   if (!data) {
     return null
   }
+
 
   return (
     <div style={{ height: '100%', position: 'relative' }}>
@@ -69,7 +75,7 @@ export default function Map() {
         onViewportChange={setViewport}
         mapboxApiAccessToken={Token}
         queryRenderedFeatures={features}
-        onLoad={() => handleLoad()}
+        // onLoad={() => handleLoad()}
       >
         <Source type="geojson" data={data}>
           <Layer {...dataLayer} />
@@ -79,7 +85,8 @@ export default function Map() {
 
       <Control
         data={data}
-        // onChange={this._updateSettings}
+        onClick={handleClick}
+        // onChange={this.updateSettings}
       />
     </div>
     
