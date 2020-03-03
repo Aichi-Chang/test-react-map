@@ -21,19 +21,38 @@ export default function Map() {
     bearing: 0,
     pitch: 0
   })
-
+  const mapRef = useRef()
 
   useEffect(() => {
     fetch('../data.json')
       .then(res => res.json())
       .then(res => setData(res))
   },[])
+  
 
-// here is the problem
-  const features = React.forwardRef(ref => {
-    const mapFeature = useRef(null)
-    queryRenderedFeature(mapFeature), {layers:['map']}
-  })
+  console.log(mapRef)
+
+
+
+  function features () { 
+    mapRef.current.queryRenderedFeatures( { layers: ['ramps'] })
+    if (features) {
+      setData(features)
+      console.log(data)
+    }
+  }
+
+  function handleLoad () {
+    mapRef.current.getMap().addLayer({
+      id: 'ramps',
+      source: data,
+      paint: {
+        'fill-color': 'red',
+        'fill-opacity': 0.8
+      }
+    })
+  }
+
 
   if (!data) {
     return null
@@ -42,12 +61,15 @@ export default function Map() {
   return (
     <div style={{ height: '100%', position: 'relative' }}>
       <MapGL
+        ref={mapRef}
         {...viewport}
         width="100%"
         height="100%"
         mapStyle="mapbox://styles/mapbox/dark-v9"
         onViewportChange={setViewport}
         mapboxApiAccessToken={Token}
+        queryRenderedFeatures={features}
+        onLoad={() => handleLoad()}
       >
         <Source type="geojson" data={data}>
           <Layer {...dataLayer} />
@@ -56,7 +78,6 @@ export default function Map() {
       </MapGL>
 
       <Control
-        // containerComponent={this.props.containerComponent}
         data={data}
         // onChange={this._updateSettings}
       />
